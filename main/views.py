@@ -1,30 +1,46 @@
-from django.shortcuts import render
-
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate 
 from django.contrib import messages
+from django.contrib.auth import (
+    authenticate,
+	login, 
+    logout
+)
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import (
+    redirect,
+	render
+)
+
+from .forms import NewUserForm
 
 def homepage_request(request):
+	if request.user.is_authenticated:
+		return redirect('main:trails')
+		
 	return render(request=request, template_name='homepage.html')
+
+@login_required
+def trails_request(request):
+	return render(request=request, template_name='trails.html')
 
 def register_request(request):
 	if request.method != 'POST':
 		return render(
 			request = request,
 			template_name = 'register.html',
-			context = {'register_form':NewUserForm()}
+			context = {'register_form': NewUserForm()}
 		)
 	
 	form = NewUserForm(request.POST)
-	if form.is_valid():
-		user = form.save()
-		login(request, user)
-		messages.success(request, 'Registration successful.' )
-		return redirect('main:homepage')
-	messages.error(request, 'Unsuccessful registration. Invalid information.')
-	return render(request=request, template_name='register.html', context={'register_form':form})
+
+	if not form.is_valid():
+		messages.error(request, 'Registration failed')
+		return render(request=request, template_name='register.html', context={'register_form':form})
+
+	user = form.save()
+	login(request, user)
+	messages.success(request, 'Registration succeeded')
+	return redirect('main:homepage')
 
 def login_request(request):
 	if request.method != 'POST':
@@ -35,16 +51,23 @@ def login_request(request):
 		)
 	
 	form = AuthenticationForm(request, data=request.POST)
-	if form.is_valid():
-		username = form.cleaned_data.get('username')
-		password = form.cleaned_data.get('password')
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.info(request, f'You are now logged in as {username}.')
-			return redirect('main:homepage')
-		else:
-			messages.error(request,'Invalid username or password.')
-	else:
+	if not form.is_valid():
 		messages.error(request,'Invalid username or password.')
-	return render(request=request, template_name='login.html', context={'login_form':form})
+		return render(request=request, template_name='login.html', context={'login_form':form})
+	
+	username = form.cleaned_data.get('username')
+	password = form.cleaned_data.get('password')
+	user = authenticate(username=username, password=password)
+		
+	if user is None:
+		messages.error(request,'Invalid username or password.')
+		return render(request=request, template_name='login.html', context={'login_form':form})
+	
+	login(request, user)
+	return redirect('main:homepage')
+	
+def logout_request(request):
+	logout(request)
+	messages.info(request, "You have successfully logged out.") 
+	return redirect("main:homepage")
+	
