@@ -52,7 +52,7 @@ def login_request(request):
 	
 	form = AuthenticationForm(request, data=request.POST)
 	if not form.is_valid():
-		messages.error(request,'Invalid username or password.')
+		messages.error(request,'Login failed.')
 		return render(request=request, template_name='login.html', context={'login_form':form})
 	
 	username = form.cleaned_data.get('username')
@@ -60,14 +60,14 @@ def login_request(request):
 	user = authenticate(username=username, password=password)
 		
 	if user is None:
-		messages.error(request,'Invalid username or password.')
+		messages.error(request,'Login failed.')
 		return render(request=request, template_name='login.html', context={'login_form':form})
 	
 	login(request, user)
-	return redirect('main:homepage')
+	return redirect('main:trails')
 	
 def logout_request(request):
 	logout(request)
-	messages.info(request, "You have successfully logged out.") 
+	messages.info(request, "Successfully logged out.") 
 	return redirect("main:homepage")
 	
