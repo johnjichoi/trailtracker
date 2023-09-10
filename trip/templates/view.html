@@ -26,6 +26,18 @@
                     </h3>
                 </div>
             </div>
+            {% if photo %}
+                <div class="row py-2 justify-content-center">
+                    {% for i in photo %}
+                        <div class="col-4">
+                            <img 
+                                src="/media/{{ i.photo }}"
+                                class="img-thumbnail"
+                            >
+                        </div>
+                    {% endfor %}
+                </div> 
+            {% endif %}
             <div class="row py-2 justify-content-center">
                 <div class="col-4">
                     <h5 class="text-center">
