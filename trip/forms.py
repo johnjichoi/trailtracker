@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import Trip
+from .models import Trip, TripPhoto
 
 class TripForm(forms.ModelForm):
 	class Meta:
@@ -29,3 +29,8 @@ class TripForm(forms.ModelForm):
 			'elevation_loss_metre': _('Elevation Loss (M)'),
 			'note': _('Notes'),
         }
+
+class TripPhotoForm(forms.ModelForm):
+    class Meta:
+        model = TripPhoto
+        exclude = ('trip', 'uploaded_at')

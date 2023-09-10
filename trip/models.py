@@ -22,3 +22,12 @@ class UserTrip(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
+
+class TripPhoto(models.Model):
+    trip = models.ForeignKey(
+        Trip, 
+        null=True,
+        on_delete=models.CASCADE
+    )
+    photo = models.FileField(upload_to='trip/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)

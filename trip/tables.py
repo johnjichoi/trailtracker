@@ -3,6 +3,9 @@ from django.utils.translation import gettext_lazy as _
 from .models import Trip
 
 class TripTable(Table):
+    upload = TemplateColumn('''
+        <a href="/trip/{{record.id}}/upload" class="btn btn-primary">Upload Photo</a>
+    ''', verbose_name='') 
     action = TemplateColumn('''
         <a href="/trip/{{record.id}}/view" class="btn btn-primary">View</a>
         <a href="/trip/{{record.id}}/edit" class="btn btn-primary">Edit</a>

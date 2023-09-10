@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -143,4 +144,9 @@ MESSAGE_TAGS = {
 }
 
 # Set Django Tables template to Bootstrap
+
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4-responsive.html'
+
+# Set media library 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
