@@ -12,7 +12,7 @@ from django.shortcuts import (
 
 from .forms import NewUserForm
 
-def homepage_request(request):
+def main_request(request):
 	if request.user.is_authenticated:
 		return redirect('trip:trip')
 		

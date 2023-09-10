@@ -1,0 +1,80 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Container -->
+    <div class="container py-5">
+        <div class="container-fluid">
+            <div class="row py-2 justify-content-center">
+                <div class="col-8">
+                    <h5>Are you sure you want to delete:</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <h1 class="text-center">
+                        {{trip.trip_name}}
+                    </h1>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h3 class="text-center">
+                        {{trip.trip_date}}
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h3 class="text-center">
+                        {{trip.location}}
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/distance.svg' %}" 
+                        >
+                        Distance
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.distance_kilometre}} KM
+                    </h3>
+                </div>
+                <div class="col-4 justify-content-center">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/duration.svg' %}" 
+                        >
+                        Duration
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.duration_hour}} Hour
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-8">
+                    <form method="POST" class="py-2">  
+                        {% csrf_token %}              
+                        <button 
+                            class="btn btn-danger" 
+                            type="submit"
+                        >
+                            Delete
+                        </button>
+                        <a 
+                            href="/trip"
+                            class="btn btn-success"
+                        >
+                            Cancel
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container -->  
+{% endblock %}

@@ -5,11 +5,11 @@ class Trip(models.Model):
     trip_name = models.CharField(max_length=50)
     trip_date = models.DateField()
     location = models.CharField(max_length=50)
-    distance_metre = models.IntegerField()
-    duration_second = models.IntegerField()
-    elevation_gain_metre = models.IntegerField()
-    elevation_loss_metre = models.IntegerField()
-    note = models.TextField()
+    distance_kilometre = models.IntegerField(blank=True, null=True)
+    duration_hour = models.IntegerField(blank=True, null=True)
+    elevation_gain_metre = models.IntegerField(blank=True, null=True)
+    elevation_loss_metre = models.IntegerField(blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
 
 class UserTrip(models.Model):
     user = models.ForeignKey(
