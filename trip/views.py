@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import (
     redirect,
     render
@@ -100,12 +101,26 @@ def edit_request(request, id):
 @login_required
 def trip_request(request):
     current_user = request.user
-
     user_trip = UserTrip.objects.filter(user=current_user)
+
+    search_term = request.GET.get('search', '')
+    # debug
+    print(search_term)
+    if search_term:
+        trip = Trip.objects.filter(
+            Q(pk__in=user_trip.values_list('trip', flat=True)) &
+            (
+                Q(trip_name__icontains=search_term) |
+                Q(location__icontains=search_term) |
+                Q(note__icontains=search_term)
+            )
+        )
+    else:
+        trip = Trip.objects.filter(
+            pk__in=user_trip.values_list('trip', flat=True)
+        )
     
-    table = TripTable(Trip.objects.filter(
-        pk__in=user_trip.values_list('trip', flat=True)
-    ))
+    table = TripTable(trip)
 
     RequestConfig(request).configure(table)
 
@@ -162,9 +177,7 @@ def view_request(request, id):
         return redirect('trip:trip')
     
     trip_photo = TripPhoto.objects.filter(trip__id=trip.id)
-    # debug
-    print(trip_photo.values())
-    
+
     return render(
         request=request, 
         template_name='view.html',

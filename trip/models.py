@@ -11,6 +11,15 @@ class Trip(models.Model):
     elevation_loss_metre = models.IntegerField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
 
+class TripPhoto(models.Model):
+    trip = models.ForeignKey(
+        Trip, 
+        null=True,
+        on_delete=models.CASCADE
+    )
+    photo = models.FileField(upload_to='trip/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 class UserTrip(models.Model):
     user = models.ForeignKey(
         get_user_model(), 
@@ -22,12 +31,3 @@ class UserTrip(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
-
-class TripPhoto(models.Model):
-    trip = models.ForeignKey(
-        Trip, 
-        null=True,
-        on_delete=models.CASCADE
-    )
-    photo = models.FileField(upload_to='trip/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
