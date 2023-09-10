@@ -1,0 +1,110 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Container -->
+    <div class="container py-5">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <h1 class="text-center">
+                        {{trip.trip_name}}
+                    </h1>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h3 class="text-center">
+                        {{trip.trip_date}}
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h3 class="text-center">
+                        {{trip.location}}
+                    </h3>
+                </div>
+            </div>
+            {% if photo %}
+                <div class="row py-2 justify-content-center">
+                    {% for i in photo %}
+                        <div class="col-4">
+                            <img 
+                                src="/media/{{ i.photo }}"
+                                class="img-thumbnail"
+                            >
+                        </div>
+                    {% endfor %}
+                </div> 
+            {% endif %}
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/distance.svg' %}" 
+                        >
+                        Distance
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.distance_kilometre}} KM
+                    </h3>
+                </div>
+                <div class="col-4 justify-content-center">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/duration.svg' %}" 
+                        >
+                        Duration
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.duration_hour}} Hour
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-4">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/elevation_gain.svg' %}" 
+                        >
+                        Elevation Gain
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.elevation_gain_metre}} M
+                    </h3>
+                </div>
+                <div class="col-4">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/elevation_loss.svg' %}" 
+                        >
+                        Elevation Loss
+                    </h5>
+                    <h3 class="text-center">
+                        {{trip.elevation_loss_metre}} M
+                    </h3>
+                </div>
+            </div>
+            <div class="row py-2 justify-content-center">
+                <div class="col-8">
+                    <h5 class="text-center">
+                        <img 
+                            src="{% static 'images/note.svg' %}" 
+                        >
+                        Notes
+                    </h5>
+                    <h3 class="text-center">{{trip.note}}</h3>
+                </div>
+            </div>
+            
+            <a 
+                href="/trip"
+                class="btn btn-primary"
+            >
+                Return
+            </a>
+        </div>
+    </div>
+    <!-- Container -->  
+{% endblock %}

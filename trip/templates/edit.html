@@ -1,0 +1,26 @@
+{% extends "header.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <!-- Container -->
+    <div class="container py-5">
+        <!-- Trip form -->
+        <form method="POST">
+            {% csrf_token %}
+            {{ trip_form|crispy }}                    
+            <button 
+                class="btn btn-success" 
+                type="submit"
+            >
+                Save
+            </button>
+            <a 
+                href="/trip"
+                class="btn btn-danger"
+            >
+                Cancel
+            </a>
+        </form>
+    </div>
+    <!-- Container -->  
+{% endblock %}
