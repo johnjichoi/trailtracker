@@ -46,6 +46,10 @@ The app can be accessed at http://127.0.0.1:8000/.
 
 Register a user then login and start tracking hikes.
 
+A demo user has been created to demonstrate the different functionalities of the app
+- user: demo
+- pass: demo1337
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md)

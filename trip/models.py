@@ -5,10 +5,10 @@ class Trip(models.Model):
     trip_name = models.CharField(max_length=50)
     trip_date = models.DateField()
     location = models.CharField(max_length=50)
-    distance_kilometre = models.IntegerField(blank=True, null=True)
-    duration_hour = models.IntegerField(blank=True, null=True)
-    elevation_gain_metre = models.IntegerField(blank=True, null=True)
-    elevation_loss_metre = models.IntegerField(blank=True, null=True)
+    distance_kilometre = models.FloatField(blank=True, null=True)
+    duration_hour = models.FloatField(blank=True, null=True)
+    elevation_gain_metre = models.FloatField(blank=True, null=True)
+    elevation_loss_metre = models.FloatField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
 
 class TripPhoto(models.Model):
